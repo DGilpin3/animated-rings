@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Extreme Animated Rings</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border: 0.4vw solid;
+      border-color: transparent transparent transparent lime;
+      border-radius: 50%;
+      animation-name: spin;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      box-shadow: 0 0 1vw lime;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(1turn);
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const totalRings = 12;
+    const baseDiameter = 10; // in vw for responsiveness
+
+    for (let i = 0; i < totalRings; i++) {
+      const d = baseDiameter + i * 5;
+      const ring = document.createElement('div');
+      ring.className = 'ring';
+      ring.style.width = `${d}vw`;
+      ring.style.height = `${d}vw`;
+      ring.style.margin = `-${d / 2}vw 0 0 -${d / 2}vw`;
+
+      // Dynamic color using HSL
+      const hue = (i * 360 / totalRings) % 360;
+      ring.style.borderColor = `hsl(${hue}, 100%, 50%) transparent transparent transparent`;
+      ring.style.boxShadow = `0 0 2vw hsl(${hue}, 100%, 60%)`;
+
+      // Spin speed and direction
+      const duration = 4 + i * 0.5;
+      ring.style.animationDuration = `${duration}s`;
+      ring.style.animationDirection = i % 2 === 0 ? 'normal' : 'reverse';
+
+      // Optional: staggered delay
+      ring.style.animationDelay = `${i * 0.1}s`;
+
+      document.body.appendChild(ring);
+    }
+  </script>
+</body>
+</html>
